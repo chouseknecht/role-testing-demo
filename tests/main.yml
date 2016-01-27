@@ -1,0 +1,28 @@
+---
+- name: Bring up docker containers
+  hosts: localhost
+  vars:
+    inventory:
+      - name: my_docker_host 
+        image: "chrismeyers/centos7"
+  roles:
+    - { role: provision_docker, provision_docker_company: 'foo', provision_docker_privileged: "{{ true }}", provision_docker_inventory: "{{ inventory }}" }
+
+- name: Run Tests
+  hosts: my_docker_host 
+  roles:
+    # Role under test
+    - { role: role-testing-demo }
+  tasks:
+    # Check the cluster health on port 9200. It should have a status of 'green'. 
+    - get_url:
+          url: http://{{ inventory_hostname }}:9200/_cluster/health
+          dest: /tmp/healthcheck.out
+          mode: 0640
+
+    - command: grep \"status\"\:\"green\" /tmp/healthcheck.out
+      register: command_out
+
+    - assert:
+          that: command_out.rc == 0
+
