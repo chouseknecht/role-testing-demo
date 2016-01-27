@@ -16,6 +16,8 @@ before_install:
   - sudo apt-get install docker-engine
 
 install:
+  - sudo pip install docker-py
+
   # Install ansible
   - sudo pip install ansible
 
