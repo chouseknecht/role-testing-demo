@@ -6,7 +6,10 @@
       - name: my_docker_host 
         image: "chrismeyers/centos7"
   roles:
-    - { role: provision_docker, provision_docker_company: 'foo', provision_docker_privileged: "{{ true }}", provision_docker_inventory: "{{ inventory }}" }
+    - { role: chrismeyersfsu.provision_docker,
+        provision_docker_company: 'foo',
+        provision_docker_privileged: "{{ true }}",
+        provision_docker_inventory: "{{ inventory }}" }
 
 - name: Run Tests
   hosts: my_docker_host 
