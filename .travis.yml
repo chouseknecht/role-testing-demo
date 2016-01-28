@@ -25,6 +25,9 @@ install:
   - sudo apt-get install -y ansible
   - sudo rm /usr/bin/python && sudo ln -s /usr/bin/python2.7 /usr/bin/python
 
+  # force use of /usr/bin/python
+  - PATH="/usr/bin:$PATH" 
+  
   # Check ansible version
   - ansible --version
 
@@ -32,6 +35,10 @@ install:
   - printf '[defaults]\nroles_path=../\nhost_key_checking = False\n' >ansible.cfg
 
 script:
+  # which python are we using
+  - wheris python
+  - python --version
+
   # Install requirements
   - ansible-galaxy install chrismeyersfsu.provision_docker
 
