@@ -37,6 +37,7 @@ install:
 script:
   # which python are we using
   - whereis python
+  - which python
   - python --version
 
   # Install requirements
